@@ -4,6 +4,17 @@
   flex-direction: row;
   overflow-x    : auto;
   gap           : 1rem;
+  margin-bottom : 1rem;
+}
+
+.bullet__container::-webkit-scrollbar {
+  background: white;
+  height    : .45rem;
+}
+
+.bullet__container::-webkit-scrollbar-thumb {
+  background   : black;
+  border-radius: 1rem;
 }
 
 .bullet__item {
