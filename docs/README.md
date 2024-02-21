@@ -80,7 +80,7 @@ El código consta de tres componentes principales: `BulletsGroup`, `Bullet` y `g
 
 Este componente toma una lista de "bullets" y los agrega a un contexto de lista existente. Utiliza el hook `useDevice` para determinar si el dispositivo es móvil y, en caso afirmativo, envuelve los "bullets" en un div con un estilo específico. Si no es un dispositivo móvil, simplemente renderiza los hijos del componente.
 
-```jsx
+```tsx
 const BulletsGroup = ({ bullets, children }: PropsWithChildren<BulletsGroupProps>) => {
   const { isMobile } = useDevice();
   const { list } = useListContext() || [];
@@ -105,7 +105,7 @@ const BulletsGroup = ({ bullets, children }: PropsWithChildren<BulletsGroupProps
 
 Este componente representa un solo "bullet". Toma una imagen, un título y un objeto de enlace como props y los renderiza dentro de un componente `Link` de `vtex.render-runtime`. El componente `Link` se utiliza para hacer que el "bullet" sea un enlace clickeable.
 
-```jsx
+```tsx
 const Bullet = ({ src, titleBullet, link}: Props) => {
   const CSS_HANDLES = [
     'bullet__item',
@@ -133,7 +133,7 @@ const Bullet = ({ src, titleBullet, link}: Props) => {
 
 Esta es una función que toma una lista de "bullets" y los convierte en una lista de componentes `Bullet`. Si un "bullet" no tiene un enlace, se le asigna un enlace predeterminado.
 
-```jsx
+```tsx
 export const getBulletsAsTSXList = (bullets: BulletSchema) =>
   bullets.map((bullet: Bullet, index) => (
     <Bullet
