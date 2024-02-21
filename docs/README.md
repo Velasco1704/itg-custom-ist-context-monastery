@@ -1,114 +1,177 @@
-📢 Use this project, [contribute](https://github.com/{OrganizationName}/{AppName}) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
+# List Context bullets groups
 
-# APP NAME
+Este componente se encarga de crear un layout personalizado de bullets.
 
-<!-- DOCS-IGNORE:start -->
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-<!-- DOCS-IGNORE:end -->
+## Instalación
 
-Under the app's name, you should explain the topic, giving a **brief description** of its **functionality** in a store when installed.
+### 1. Clonar repositorio
 
-Next, **add media** (either an image of a GIF) with the rendered components, so that users can better understand how the app works in practice. 
+Copia el [repositorio](https://github.com/Velasco1704/itg-custom-ist-context-monastery) del proyecto y clonarlo en tu terminal.
 
-![Media Placeholder](https://user-images.githubusercontent.com/52087100/71204177-42ca4f80-227e-11ea-89e6-e92e65370c69.png)
+```bash
+git clone https://github.com/Velasco1704/itg-custom-ist-context-monastery
+```
 
-## Configuration 
+### 2. Acceder a la Carpeta del Proyecto
 
-In this section, you first must **add the primary instructions** that will allow users to use the app's blocks in their store, such as:
+Después de clonar el repositorio, entra a la carpeta del proyecto utilizando el siguiente comando:
 
-1. Adding the app as a theme dependency in the `manifest.json` file;
-2. Declaring the app's main block in a given theme template or inside another block from the theme.
+```bash
+cd itg-custom-ist-context-monastery
+```
 
-Remember to add a table with all blocks exported by the app and their descriptions. You can verify an example of it on the [Search Result documentation](https://vtex.io/docs/components/all/vtex.search-result@3.56.1/). 
+### 3. Instalar dependencias de la carpeta react
 
-Next, add the **props table** containing your block's props. 
+Entra a la carpeta de react y instala las dependencias.
 
-If the app exports more than one block, create several tables - one for each block. For example:
+```bash
+cd react && yarn
+```
 
-### `block-1` props
+> [!NOTE]
+> No uses npm y yarn al mismo tiempo esto va a causar conflictos
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+### 4. Iniciar Sesión en VTEX
 
+Para poder trabajar con VTEX, necesitas iniciar sesión con tu cuenta. Utiliza el siguiente comando y reemplaza {account} con tu nombre de cuenta de VTEX:
 
-### `block-2` props
+```bash
+vtex login { account }
+```
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+### 5. Seleccionar el Espacio de Trabajo
 
-Prop types are: 
+Una vez que hayas iniciado sesión, selecciona el espacio de trabajo en el que deseas trabajar utilizando el siguiente comando. Reemplaza {workspace} con el nombre de tu espacio de trabajo:
 
-- `string` 
-- `enum` 
-- `number` 
-- `boolean` 
-- `object` 
-- `array` 
+```bash
+vtex use { workspace }
+```
 
-When documenting a prop whose type is `object` or `array` another prop table will be needed. You can create it following the example below:
+### 6. Enlazar el Proyecto al Espacio de Trabajo
 
-- `propName` object:
+Finalmente, enlaza el proyecto a tu espacio de trabajo para visualizarlo ejecutando el siguiente comando:
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+```bash
+vtex link
+```
 
+### 7. Agrega el componente
 
-Remember to also use this Configuration section to  **showcase any necessary disclaimer** related to the app and its blocks, such as the different behavior it may display during its configuration. 
+Agrega el componente en el `manifest.json` de tu **store theme**
 
-## Modus Operandi *(not mandatory)*
+```JSON
+"dependencies": {
+   "{accountName}.{appName}": "{appVersion}",
+    "vtex.store": "2.x",
+    "vtex.store-header": "2.x"
+}
+```
 
-There are scenarios in which an app can behave differently in a store, according to how it was added to the catalog, for example. It's crucial to go through these **behavioral changes** in this section, allowing users to fully understand the **practical application** of the app in their store.
+## Descripción general del proyecto y su uso
 
-If you feel compelled to give further details about the app, such as it's **relationship with the VTEX admin**, don't hesitate to use this section. 
-
-## Customization
-
-The first thing that should be present in this section is the sentence below, showing users the recipe pertaining to CSS customization in apps:
-
-`In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).`
-
-Thereafter, you should add a single column table with the available CSS handles for the app, like the one below. Note that the Handles must be ordered alphabetically.
-
-| CSS Handles |
-| ----------- | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` |
+Dentro de la carpeta react tenemos todo el codigo del componente, en el archivo `BulletsGroup.tsx` y la carpeta components. Este código es un conjunto de componentes que se utilizan para crear una lista de "bullets" o elementos de lista, cada uno con una imagen, un título y un enlace opcional. Los componentes están diseñados para ser reutilizables, en la version mobile renderiza el custom layout y la version desktop se renderiza un slider layout nativo de VTEX IO.
 
 
-If there are none, add the following sentence instead:
+### Componentes
 
-`No CSS Handles are available yet for the app customization.`
+El código consta de tres componentes principales: `BulletsGroup`, `Bullet` y `getBulletsAsTSXList`.
 
-<!-- DOCS-IGNORE:start -->
+#### BulletsGroup
 
-## Contributors ✨
+Este componente toma una lista de "bullets" y los agrega a un contexto de lista existente. Utiliza el hook `useDevice` para determinar si el dispositivo es móvil y, en caso afirmativo, envuelve los "bullets" en un div con un estilo específico. Si no es un dispositivo móvil, simplemente renderiza los hijos del componente.
 
-Thanks goes to these wonderful people:
+```jsx
+const BulletsGroup = ({ bullets, children }: PropsWithChildren<BulletsGroupProps>) => {
+  const { isMobile } = useDevice();
+  const { list } = useListContext() || [];
+  const bulletsGroup = getBulletsAsTSXList(bullets);
+  const newListContextValue = list.concat(bulletsGroup);
+  const CSS_HANDLES = ["bullet__container"];
+  const handles = useCssHandles(CSS_HANDLES);
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+  return (
+    <ListContextProvider list={newListContextValue}>
+      {isMobile ? (
+        <div className={handles['bullet__container']}>{bulletsGroup}</div>
+      ) : (
+        children
+      )}
+    </ListContextProvider>
+  );
+};
+```
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+#### Bullet
 
-<!-- DOCS-IGNORE:end -->
+Este componente representa un solo "bullet". Toma una imagen, un título y un objeto de enlace como props y los renderiza dentro de un componente `Link` de `vtex.render-runtime`. El componente `Link` se utiliza para hacer que el "bullet" sea un enlace clickeable.
 
----- 
+```jsx
+const Bullet = ({ src, titleBullet, link}: Props) => {
+  const CSS_HANDLES = [
+    'bullet__item',
+    'bullet__item--title',
+    'bullet__item--image',
+    'bullet__item--link',
+  ];
+  const handles = useCssHandles(CSS_HANDLES)
+  return (
+    <div className={handles['bullet__item']}>
+      <Link className={handles['bullet__item--link']} to={link.url}>
+        <img
+          className={handles['bullet__item--image']}
+          src={src}
+          alt={titleBullet}
+        />
+        <p className={handles['bullet__item--title']}>{titleBullet}</p>
+      </Link>
+    </div>
+  )
+}
 
-Check out some documentation models that are already live: 
-- [Breadcrumb](https://github.com/vtex-apps/breadcrumb)
-- [Image](https://vtex.io/docs/components/general/vtex.store-components/image)
-- [Condition Layout](https://vtex.io/docs/components/all/vtex.condition-layout@1.1.6/)
-- [Add To Cart Button](https://vtex.io/docs/components/content-blocks/vtex.add-to-cart-button@0.9.0/)
-- [Store Form](https://vtex.io/docs/components/all/vtex.store-form@0.3.4/)
+```
+#### getBulletsAsTSXList
+
+Esta es una función que toma una lista de "bullets" y los convierte en una lista de componentes `Bullet`. Si un "bullet" no tiene un enlace, se le asigna un enlace predeterminado.
+
+```jsx
+export const getBulletsAsTSXList = (bullets: BulletSchema) =>
+  bullets.map((bullet: Bullet, index) => (
+    <Bullet
+      key={index}
+      src={bullet.image}
+      titleBullet={bullet.titleBullet}
+      link={
+        bullet.link
+          ? bullet.link
+          : {
+              url: "",
+              attributesNoFollow: false,
+              attributesTitle: "",
+              openNewTab: false,
+              newTab: false,
+            }
+      }
+    />
+  ));
+```
+
+### Props
+
+El código también define dos interfaces de TypeScript: `BulletSchema` y `LinkProps`. Estos interfaces definen la forma de los objetos que se pasan como props a los componentes. `BulletSchema` es un array de objetos, cada uno de los cuales tiene una imagen, un título y un enlace opcional. `LinkProps` es un objeto que define las propiedades de un enlace.
+
+```ts
+export type BulletSchema = [{
+  image: string;
+  titleBullet: string;
+  link?: LinkProps;
+}]
+
+export interface LinkProps{
+  url: string;
+  attributesNoFollow?: boolean;
+  attributesTitle?: string;
+  openNewTab?: boolean;
+  newTab?: boolean;
+}
+
+```
